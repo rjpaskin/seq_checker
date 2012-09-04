@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     bio (1.4.3)
+    erubis (2.7.0)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -16,4 +17,5 @@ PLATFORMS
 
 DEPENDENCIES
   bio
+  erubis
   sinatra
