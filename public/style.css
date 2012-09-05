@@ -22,15 +22,27 @@
 }
 
 .alignment .query {
-  color: lightblue;
   top: 15px;
 }
 
-.alignment .consensus {
-  top: 30px;
+.alignment .target {
+  text-transform: uppercase;
 }
 
-.alignment .target {
-  top: 45px;
+.alignment .target-1 {
+  top: 30px;
+  color: blue;
+}
+
+.alignment .target-1 .insertion {
+  background-color: blue;
+}
+.alignment .target-2 {
+  top: 65px;
   color: forestgreen;
+}
+
+.alignment .target-2 .insertion {
+  background-color: forestgreen;
+}
 }

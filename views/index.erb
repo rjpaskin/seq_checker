@@ -1,4 +1,11 @@
+<div class="alignment" style="height: <%= (@query.nalen % 36) * (15 * 6.5) %>px">
   <div class="translation"><%= @protein.gsub(/(.)/, ' \1 ') %></div>
+  <div class="query"><%= @query.naseq.upcase %></div>
+  <% @hits.each_with_index do |hit, index| %>
+    <div class="target target-<%= index + 1 %>"><%= hit[:target] -%></div>
+  <% end %>
+</div>
+
 <% @hits.each do |hit| %>
   <h3><%= hit[:hit].target_id %></h3>
   <dl>
@@ -6,13 +13,6 @@
       <dt><%= cmd %></dt><dd><%= hit[:hit].send(cmd) %></dd>
     <% end %>
   </dl>
-  
-  <div class="alignment">
-    <div class="query-master"><%= @query.naseq.upcase %></div>
-    <div class="query"><%= hit[:query].upcase %></div>
-    <div class="consensus"><%= hit[:consensus] %></div>
-    <div class="target"><%= hit[:target].upcase %></div>
-  </div>
 <% end %>
 
 <pre style="display: none"><%= @report %></pre>

@@ -3,7 +3,9 @@ require 'erubis'
 
 module SeqUtils
   def pad_sequence(seq, positions, total_length)
-    "#{'_' * (positions.min - 1)}#{seq}#{'_' * (total_length - positions.max)}"
+    char = '-'#'&nbsp;'
+    "#{char * (positions.min - 1)}#{seq}#{char * (total_length - positions.max)}"
+  end
   end
 end
 
@@ -29,7 +31,7 @@ class SeqCheck < Sinatra::Base
     
     @hits = []
     @report = prog.output
-    
+        
     results.each do |hit|
       # If E-value is smaller than 0.0001
       if hit.evalue < 0.0001
@@ -51,9 +53,7 @@ class SeqCheck < Sinatra::Base
       
         @hits << {
           :hit       => hit,
-          :query     => pad_sequence(query_seq, positions, @query.nalen),
-          :target    => pad_sequence(target_seq, positions, @query.nalen),
-          :consensus => pad_sequence(consensus, positions, @query.nalen)
+          :target    => pad_sequence(highlight_query_insertions(query_seq, target_seq), positions, @query.nalen),
         }
       end
     end
