@@ -16,6 +16,7 @@ class SeqCheck < Sinatra::Base
     prog.db = '_trials/Trial_2/RP1037/fasta.lib.txt'
     
     @query = Bio::FlatFile.open(Bio::FastaFormat, '_trials/Trial_2/Bach1_no_BTB.fasta').next_entry
+    @protein = @query.naseq.translate
     
     results = @query.fasta(prog)
     

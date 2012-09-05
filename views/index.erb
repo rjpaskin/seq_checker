@@ -1,3 +1,4 @@
+  <div class="translation"><%= @protein.gsub(/(.)/, ' \1 ') %></div>
 <% @hits.each do |hit| %>
   <h3><%= hit[:hit].target_id %></h3>
   <dl>

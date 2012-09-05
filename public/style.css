@@ -16,6 +16,11 @@
   width: inherit;
 }
 
+.alignment .translation {
+  top: 0px;
+  color: lightgrey;
+}
+
 .alignment .query {
   color: lightblue;
   top: 15px;
