@@ -7,19 +7,21 @@ class SeqCheck < Sinatra::Base
     prog = Bio::Fasta.local('bin/fasta36', nil, '-n -W 0')
     prog.db = '_trials/Trial_2/RP1037/fasta.lib.txt'
     
-    query = prog.query File.read('_trials/Trial_2/Bach1_no_BTB.fasta')
+    @query = Bio::FlatFile.open(Bio::FastaFormat, '_trials/Trial_2/Bach1_no_BTB.fasta').next_entry
+    
+    results = @query.fasta(prog)
     
     # Fix for new (i.e. Fasta36) format
-    query.list.split(/\n>>/)[2..-1].each do |h|
+    results.list.split(/\n>>/)[2..-1].each do |h|
       hit = Bio::Fasta::Report::Hit.new(h)
       
-      query.hits << hit
+      results.hits << hit
     end
     
     @hits = []
     @report = prog.output
     
-    query.each do |hit|
+    results.each do |hit|
       # If E-value is smaller than 0.0001
       if hit.evalue < 0.0001
         query_seq = Bio::Sequence::NA.new hit.query_seq
