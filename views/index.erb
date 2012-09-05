@@ -1,0 +1,16 @@
+<% @hits.each do |hit| %>
+  <h3><%= hit[:hit].target_id %></h3>
+  <dl>
+    <% %w{ query_len target_len target_start target_end }.each do |cmd| %>
+      <dt><%= cmd %></dt><dd><%= hit[:hit].send(cmd) %></dd>
+    <% end %>
+  </dl>
+  
+  <div class="alignment">
+    <div class="query"><%= hit[:query].upcase %></div>
+    <div class="consensus"><%= hit[:consensus] %></div>
+    <div class="target"><%= hit[:target].upcase %></div>
+  </div>
+<% end %>
+
+<pre style="display: none"><%= @report %></pre>

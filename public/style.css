@@ -1,0 +1,30 @@
+.alignment {
+  width: 1080px;
+  word-wrap: break-word;
+  white-space: pre;
+  font-family: Courier;
+  font-size: 15px;
+  line-height: 500%;
+  color: #666;
+  position: relative;
+  min-height: 500px;
+  overflow: overlay;
+}
+
+.alignment > div {
+  position: absolute;
+  width: inherit;
+}
+
+.alignment .query {
+  color: lightblue;
+}
+
+.alignment .consensus {
+  top: 15px;
+}
+
+.alignment .target {
+  top: 30px;
+  color: forestgreen;
+}
