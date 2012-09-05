@@ -3,12 +3,13 @@
   word-wrap: break-word;
   white-space: pre;
   font-family: Courier;
-  font-size: 15px;
-  line-height: 500%;
+  font-size: 16px;
+  line-height: 833%;
   color: #666;
   position: relative;
-  min-height: 500px;
+  min-height: 1000px;
   overflow: overlay;
+  padding-right: 30px;
 }
 
 .alignment > div {
@@ -29,6 +30,39 @@
   text-transform: uppercase;
 }
 
+.target .insertion {
+  position: relative;
+  top: 24px;
+  left: -8px;
+  color: #fff;
+  display: inline-block;
+  line-height: 100%;
+  width: 16px;
+  text-align: center;
+}
+
+.insertion span {
+  width: 20px;
+}
+
+.insertion .arrow {
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 8px 10px 8px;
+  border-color: transparent;
+  content: '';
+  -webkit-transform:rotate(360deg);
+  position: absolute;
+  top: -10px;
+  background-color: transparent;
+}
+
+.insertion ~ span:not(.insertion){
+  position: relative;
+  margin-left: -16px;
+}
+
 .alignment .target-1 {
   top: 30px;
   color: blue;
@@ -37,6 +71,11 @@
 .alignment .target-1 .insertion {
   background-color: blue;
 }
+
+.alignment .target-1 .insertion .arrow {
+  border-bottom-color: blue;
+}
+
 .alignment .target-2 {
   top: 65px;
   color: forestgreen;
@@ -45,4 +84,7 @@
 .alignment .target-2 .insertion {
   background-color: forestgreen;
 }
+
+.alignment .target-2 .insertion .arrow {
+  border-bottom-color: forestgreen;
 }
