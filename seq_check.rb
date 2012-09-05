@@ -1,7 +1,15 @@
 require 'sinatra'
 require 'erubis'
 
+module SeqUtils
+  def pad_sequence(seq, positions, total_length)
+    "#{'_' * (positions.min - 1)}#{seq}#{'_' * (total_length - positions.max)}"
+  end
+end
+
 class SeqCheck < Sinatra::Base
+  helpers ::SeqUtils
+  
   get '/' do
     require 'bio'
     prog = Bio::Fasta.local('bin/fasta36', nil, '-n -W 0')
@@ -37,12 +45,14 @@ class SeqCheck < Sinatra::Base
       
         consensus.gsub!(' ', '*')
         consensus.gsub!(':', ' ')
+        
+        positions = [hit.query_start, hit.query_end]
       
         @hits << {
           :hit       => hit,
-          :query     => query_seq,
-          :target    => target_seq,
-          :consensus => consensus,
+          :query     => pad_sequence(query_seq, positions, @query.nalen),
+          :target    => pad_sequence(target_seq, positions, @query.nalen),
+          :consensus => pad_sequence(consensus, positions, @query.nalen)
         }
       end
     end

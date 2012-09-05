@@ -18,13 +18,14 @@
 
 .alignment .query {
   color: lightblue;
-}
-
-.alignment .consensus {
   top: 15px;
 }
 
-.alignment .target {
+.alignment .consensus {
   top: 30px;
+}
+
+.alignment .target {
+  top: 45px;
   color: forestgreen;
 }
