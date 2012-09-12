@@ -1,0 +1,9 @@
+<% if development? %>
+  <% require 'pp' %>
+  <div style="background-color: #eee; border: 1px solid #ccc; padding: 4px;">
+    <% [:params, :session].each do |var| %>
+      <h5><%= var.to_s.capitalize %></h5>
+      <pre><%= Rack::Utils.escape_html send(var).pretty_inspect %></pre>
+    <% end %>
+  </div>
+<% end %>
