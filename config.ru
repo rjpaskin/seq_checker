@@ -1,10 +1,3 @@
-require 'rubygems'
-require 'bundler'
+require File.expand_path('../config/setup.rb', __FILE__)
 
-# Load gems into load path, but don't require them
-Bundler.setup
-
-$LOAD_PATH << File.expand_path('../lib', __FILE__)
-
-require './seq_check.rb'
 run SeqCheck
