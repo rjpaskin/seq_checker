@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 
 # Load gems into load path, but don't require them
-Bundler.setup
+Bundler.setup(:default)
 
 $LOAD_PATH << File.expand_path('../../lib', __FILE__)
 

@@ -1,5 +1,4 @@
-require 'test/unit'
-require File.expand_path('../../lib/fasta_job', __FILE__)
+require File.expand_path('../test_setup.rb', __FILE__)
 
 class FastaJobTest < Test::Unit::TestCase
   def setup

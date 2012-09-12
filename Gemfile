@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 gem 'sinatra', :require => 'sinatra/base'
 gem 'erubis'
-gem 'rack-test'
 
-gem "bio"
+gem 'bio'
+
+group :test do
+  gem 'rack-test'
+end

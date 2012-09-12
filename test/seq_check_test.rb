@@ -1,9 +1,4 @@
-require File.expand_path('../../config/setup.rb', __FILE__)
-
-require 'test/unit'
-require 'rack/test'
-
-ENV['RACK_ENV'] = 'test'
+require File.expand_path('../test_setup.rb', __FILE__)
 
 class SeqCheckTest < Test::Unit::TestCase
   include Rack::Test::Methods
