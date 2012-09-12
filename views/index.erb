@@ -1,0 +1,17 @@
+<form action="/" method="post" enctype="multipart/form-data">
+  <div>
+    <label for="query_seq">Input sequence</label>
+    <textarea id="query_seq" name="query_seq"></textarea>
+  </div>
+  
+  <% 0.upto(2) do |num| %>
+    <div>
+      <label for="trace_file_<%= num %>">Trace file</label>
+      <input id="trace_file_<%= num %>" name="trace_file[<%= num %>]" type="file" />
+    </div>
+  <% end %>
+  
+  <div>
+    <input type="submit" value="Go" />
+  </div>
+</form>
