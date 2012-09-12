@@ -27,35 +27,31 @@ class SeqCheck < Sinatra::Base
     
     job.run!
     
-    @hits = []
     @report = job.report
     @query = job.query
     @protein = @query.naseq.translate
         
-    job.results.each do |hit|
-      # If E-value is smaller than 0.0001
-      if hit.evalue < 0.0001
-        query_seq = Bio::Sequence::NA.new hit.query_seq
-        target_seq, consensus = hit.target_seq.split('; al_cons:')
+    job.results.threshold(0.0001).each_with_object(@hits = []) do |hit, hits|
+      query_seq = Bio::Sequence::NA.new(hit.query_seq)
+      target_seq, consensus = hit.target_seq.split('; al_cons:')
       
-        target_seq = Bio::Sequence::NA.new target_seq
+      target_seq = Bio::Sequence::NA.new(target_seq)
       
-        if hit.direction == 'r'
-          query_seq.reverse_complement!
-          target_seq.reverse_complement!
-          consensus.reverse!
-        end
-      
-        consensus.gsub!(' ', '*')
-        consensus.gsub!(':', ' ')
-        
-        positions = [hit.query_start, hit.query_end]
-      
-        @hits << {
-          :hit    => hit,
-          :target => pad_sequence(highlight_query_insertions(query_seq, target_seq), positions, @query.nalen),
-        }
+      if hit.direction == 'r'
+        query_seq.reverse_complement!
+        target_seq.reverse_complement!
+        consensus.reverse!
       end
+      
+      consensus.gsub!(' ', '*')
+      consensus.gsub!(':', ' ')
+      
+      positions = [hit.query_start, hit.query_end]
+      
+      hits << {
+        :hit    => hit,
+        :target => pad_sequence(highlight_query_insertions(query_seq, target_seq), positions, @query.nalen),
+      }
     end
     
     erb :alignment
