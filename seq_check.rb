@@ -6,6 +6,10 @@ class SeqCheck < Sinatra::Base
   helpers ::SeqUtils
   
   get '/' do
+    erb :index
+  end
+  
+  get '/alignment' do
     require 'bio'
     prog = Bio::Fasta.local('bin/fasta36', nil, '-n -W 0')
     prog.db = '_trials/Trial_2/RP1037/fasta.lib.txt'
@@ -51,6 +55,6 @@ class SeqCheck < Sinatra::Base
       end
     end
     
-    erb :index
+    erb :alignment
   end
 end
