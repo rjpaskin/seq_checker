@@ -1,13 +1,23 @@
 require 'sinatra'
+require 'rack/flash'
+require 'sinatra/redirect_with_flash'
 require 'erubis'
 require 'seq_utils'
 require 'fasta_job'
 
 class SeqCheck < Sinatra::Base
   helpers ::SeqUtils
+  enable :sessions
+  use Rack::Flash
+  helpers Sinatra::RedirectWithFlash
+  set :session_secret, 'ce555ca277fdc395a583cdde668dd9eecbd02b29ca786a85570562b087fccf51c5ac6ed91784fb34676e7edf719429a370dae1f0213ac10e2ad6c95656ec6ed0'
   
   get '/' do
     erb :index
+  end
+  
+  post '/' do
+    redirect '/', :error => 'error'
   end
   
   get '/alignment' do    

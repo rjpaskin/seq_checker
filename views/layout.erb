@@ -6,6 +6,14 @@
   </head>
 
   <body>
+    <% %w[notice error warning alert info].each do |key| %>
+      <% if flash[key] %>
+        <div class="flash <%= key %>">
+          <%= flash[key] %>
+        </div>
+      <% end %>
+    <% end %>
+    
     <%= yield %>
     <%= erb :debug %>
   <body>
