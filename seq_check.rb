@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'erubis'
 require 'seq_utils'
+require 'fasta_job'
 
 class SeqCheck < Sinatra::Base
   helpers ::SeqUtils
@@ -9,27 +10,19 @@ class SeqCheck < Sinatra::Base
     erb :index
   end
   
-  get '/alignment' do
-    require 'bio'
-    prog = Bio::Fasta.local('bin/fasta36', nil, '-n -W 0')
-    prog.db = '_trials/Trial_2/RP1037/fasta.lib.txt'
+  get '/alignment' do    
+    trial_dir = File.expand_path('../_trials/Trial_2', __FILE__)
     
-    @query = Bio::FlatFile.open(Bio::FastaFormat, '_trials/Trial_2/Bach1_no_BTB.fasta').next_entry
-    @protein = @query.naseq.translate
+    job = FastaJob.new "#{trial_dir}/RP1037/fasta.lib.txt", "#{trial_dir}/Bach1_no_BTB.fasta"
     
-    results = @query.fasta(prog)
-    
-    # Fix for new (i.e. Fasta36) format
-    results.list.split(/\n>>/)[2..-1].each do |h|
-      hit = Bio::Fasta::Report::Hit.new(h)
-      
-      results.hits << hit
-    end
+    job.run!
     
     @hits = []
-    @report = prog.output
+    @report = job.report
+    @query = job.query
+    @protein = @query.naseq.translate
         
-    results.each do |hit|
+    job.results.each do |hit|
       # If E-value is smaller than 0.0001
       if hit.evalue < 0.0001
         query_seq = Bio::Sequence::NA.new hit.query_seq
@@ -49,8 +42,8 @@ class SeqCheck < Sinatra::Base
         positions = [hit.query_start, hit.query_end]
       
         @hits << {
-          :hit       => hit,
-          :target    => pad_sequence(highlight_query_insertions(query_seq, target_seq), positions, @query.nalen),
+          :hit    => hit,
+          :target => pad_sequence(highlight_query_insertions(query_seq, target_seq), positions, @query.nalen),
         }
       end
     end
