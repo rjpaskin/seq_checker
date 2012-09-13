@@ -1,4 +1,5 @@
 require 'bio'
+require 'fasta_job'
 
 class Alignment
   attr_reader   :query_sequence

@@ -3,7 +3,7 @@ require 'rack/flash'
 require 'sinatra/redirect_with_flash'
 require 'erubis'
 require 'seq_utils'
-require 'fasta_job'
+require 'alignment'
 
 class SeqCheck < Sinatra::Base
   helpers ::SeqUtils
@@ -21,11 +21,15 @@ class SeqCheck < Sinatra::Base
   end
   
   get '/alignment' do    
-    trial_dir = File.expand_path('../_trials/Trial_2', __FILE__)
+    _fixtures = File.expand_path('../test/fixtures', __FILE__)
+    _query    = File.read("#{_fixtures}/Bach1_no_BTB.fasta")
+        
+    alignment = Alignment.new(_query, Dir.glob("#{_fixtures}/*.ab1"))
+    alignment.db_file_path = File.expand_path('../filestore', __FILE__)
     
-    job = FastaJob.new "#{trial_dir}/RP1037/fasta.lib.txt", "#{trial_dir}/Bach1_no_BTB.fasta"
+    halt erb 'Error' unless alignment.valid?
     
-    job.run!
+    job = alignment.run_alignment
     
     @report = job.report
     @query = job.query
