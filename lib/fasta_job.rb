@@ -28,6 +28,6 @@ class FastaJob
     
     @report = @@fasta.output
     
-    return @results
+    return self
   end
 end
