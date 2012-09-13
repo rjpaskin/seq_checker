@@ -1,8 +1,8 @@
-require File.expand_path('../test_setup.rb', __FILE__)
+require File.expand_path('../../test_setup.rb', __FILE__)
 
 class FastaJobTest < Test::Unit::TestCase
   def setup
-    @fixtures = File.expand_path('../fixtures', __FILE__)
+    @fixtures = File.expand_path('../../fixtures', __FILE__)
   end
 
   def test_initializes_correctly

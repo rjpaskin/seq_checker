@@ -1,4 +1,4 @@
-require File.expand_path('../test_setup.rb', __FILE__)
+require File.expand_path('../../test_setup.rb', __FILE__)
 
 class SeqCheckTest < Test::Unit::TestCase
   include Rack::Test::Methods
