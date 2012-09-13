@@ -6,8 +6,13 @@ class FastaJob
   
   attr_reader :query, :results, :report
   
-  def initialize(db_file, query_file)
-    @query = Bio::FlatFile.open(Bio::FastaFormat, query_file).next_entry
+  def initialize(db_file, query)
+    if File.exists? query
+      @query = Bio::FlatFile.open(Bio::FastaFormat, query).next_entry
+    else
+      @query = Bio::FastaFormat.new(query)
+    end
+    
     @@fasta.db = db_file
   end
   
