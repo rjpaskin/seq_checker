@@ -5,6 +5,8 @@ require 'erubis'
 require 'seq_utils'
 require 'alignment'
 
+Alignment.root_path = File.expand_path('../filestore', __FILE__)
+
 class SeqCheck < Sinatra::Base
   helpers ::SeqUtils
   enable :sessions
@@ -25,8 +27,7 @@ class SeqCheck < Sinatra::Base
     _query    = File.read("#{_fixtures}/Bach1_no_BTB.fasta")
         
     alignment = Alignment.new(_query, Dir.glob("#{_fixtures}/*.ab1"))
-    alignment.db_file_path = File.expand_path('../filestore', __FILE__)
-    
+        
     halt erb 'Error' unless alignment.valid?
     
     job = alignment.run_alignment

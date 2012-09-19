@@ -2,8 +2,7 @@ require 'bio'
 require 'fasta_job'
 
 class Alignment
-  attr_reader   :query_sequence
-  attr_accessor :db_file_path
+  attr_reader   :query_sequence, :id
 
   # query_sequence Sequence to run alignments against, either
   #                plain text or Fasta format
@@ -11,6 +10,7 @@ class Alignment
   #                database
   def initialize(query_sequence, trace_files)
     @query_sequence = Bio::FastaFormat.new(query_sequence)
+    @id = random_token
     @trace_files = []
     
     trace_files.each do |trace|
@@ -27,18 +27,37 @@ class Alignment
   end
   
   def run_alignment
+    generate_folder
     FastaJob.new(generate_db_file, @query_sequence).run! if valid?
   end
   
-  def generate_db_file
-    filename = File.join(@db_file_path, 'lib.fasta')
+  def self.root_path=(path)
+    @@root_path = path
+  end
+  
+  private
+  
+    def generate_db_file
+      filename = File.join(folder, 'lib.fasta')
     
-    File.open(filename, 'w') do |file|
-      @trace_files.each do |trace|
-        file.puts trace.to_biosequence.output_fasta(trace.sample_title.join)
+      File.open(filename, 'w') do |file|
+        @trace_files.each do |trace|
+          file.puts trace.to_biosequence.output_fasta(trace.sample_title.join)
+        end
       end
+    
+      filename
+    end
+  
+    def generate_folder
+      Dir.mkdir folder unless File.exists? folder
+    end
+  
+    def folder
+      File.join(@@root_path, id)
     end
     
-    filename
-  end
+    def random_token
+      rand(36**8).to_s(36)
+    end
 end
