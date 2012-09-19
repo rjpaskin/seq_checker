@@ -75,7 +75,7 @@ class Alignment
     end
   
     def folder
-      File.join(@@root_path, id)
+      File.join(@@root_path, @id)
     end
     
     def random_token
