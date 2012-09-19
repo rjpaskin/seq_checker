@@ -10,6 +10,8 @@
   min-height: 1000px;
   overflow: overlay;
   padding-right: 30px;
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, color-stop(.5, white), color-stop(.5, #F9F9F9), to(#F9F9F9));
+  -webkit-background-size: 60px;
 }
 
 .alignment > div {
