@@ -22,10 +22,8 @@ class FastaJob
     @results = @query.fasta(@@fasta)
     
     # Fix for new (i.e. Fasta36) format
-    @results.list.split(/\n>>/)[2..-1].each do |h|
-      hit = Bio::Fasta::Report::Hit.new(h)
-  
-      results.hits << hit
+    @results.list.split(/\n>>/)[2..-1].each do |hit|
+      results.hits << Bio::Fasta::Report::Hit.new(hit)
     end
     
     @report = @@fasta.output
