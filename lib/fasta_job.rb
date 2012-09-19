@@ -27,6 +27,8 @@ class FastaJob
     @results.list.split(/\n>>/)[2..-1].each do |hit|
       results.hits << Bio::Fasta::Report::Hit.new(hit)
     end
+    
+    return self
   end
     
   def run!

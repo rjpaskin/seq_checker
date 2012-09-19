@@ -30,7 +30,12 @@ class SeqCheck < Sinatra::Base
         
     halt erb 'Error' unless alignment.valid?
     
-    job = alignment.run_alignment
+    alignment.run_alignment
+    redirect "/alignment/#{alignment.id}", :notice => 'works!'
+  end
+  
+  get '/alignment/:id' do
+    job = Alignment.fetch(params[:id])
     
     @report = job.report
     @query = job.query

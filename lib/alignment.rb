@@ -36,6 +36,13 @@ class Alignment
     end
   end
   
+  def self.fetch(id)
+    root    = File.join(@@root_path, id)
+    results = File.read("#{root}/results.report")
+    
+    FastaJob.new("#{root}/lib.fasta", "#{root}/query.fasta").parse_results(results) 
+  end
+  
   def self.root_path=(path)
     @@root_path = path
   end
