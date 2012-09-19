@@ -27,8 +27,12 @@ class Alignment
   end
   
   def run_alignment
-    generate_folder
-    FastaJob.new(generate_db_file, @query_sequence).run! if valid?
+    if valid?
+      generate_folder
+      job = FastaJob.new(generate_db_file, @query_sequence).run!
+      write_results_file(job.report)
+      return job
+    end
   end
   
   def self.root_path=(path)
@@ -47,6 +51,14 @@ class Alignment
       end
     
       filename
+    end
+    
+    def write_results_file(text)
+      filename = File.join(folder, 'results.report')
+      
+      File.open(filename, 'w') do |file|
+        file.puts text
+      end
     end
   
     def generate_folder
