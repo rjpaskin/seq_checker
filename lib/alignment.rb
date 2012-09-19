@@ -31,6 +31,7 @@ class Alignment
       generate_folder
       job = FastaJob.new(generate_db_file, @query_sequence).run!
       write_results_file(job.report)
+      write_query_file(@query_sequence.to_s)
       return job
     end
   end
@@ -59,6 +60,14 @@ class Alignment
       File.open(filename, 'w') do |file|
         file.puts text
       end
+    end
+    
+    def write_query_file(text)
+      filename = File.join(folder, 'query.fasta')
+      
+      File.open(filename, 'w') do |file|
+        file.puts text
+      end    
     end
   
     def generate_folder
