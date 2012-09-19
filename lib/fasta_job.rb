@@ -18,15 +18,21 @@ class FastaJob
     @@fasta.db = db_file
   end
   
-  def run!
-    @results = @query.fasta(@@fasta)
+  def parse_results(results_text)
+    @report = results_text
+    
+    @results = Bio::Fasta::Report.new(@report)
     
     # Fix for new (i.e. Fasta36) format
     @results.list.split(/\n>>/)[2..-1].each do |hit|
       results.hits << Bio::Fasta::Report::Hit.new(hit)
     end
+  end
     
-    @report = @@fasta.output
+  def run!
+    @query.fasta(@@fasta)
+    
+    parse_results @@fasta.output
     
     return self
   end
