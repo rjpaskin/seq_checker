@@ -38,6 +38,7 @@ class Alignment
   
   def self.fetch(id)
     root    = File.join(@@root_path, id)
+    raise 'Non-existing alignment' unless File.exists? root
     results = File.read("#{root}/results.report")
     
     FastaJob.new("#{root}/lib.fasta", "#{root}/query.fasta").parse_results(results) 

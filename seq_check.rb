@@ -35,7 +35,11 @@ class SeqCheck < Sinatra::Base
   end
   
   get '/alignment/:id' do
-    job = Alignment.fetch(params[:id])
+    begin
+      job = Alignment.fetch(params[:id])
+    rescue Exception
+      halt 404, erb('No alignment available')
+    end
     
     @report = job.report
     @query = job.query
