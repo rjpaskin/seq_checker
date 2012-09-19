@@ -1,4 +1,5 @@
 <div class="alignment" style="height: <%= (@query.nalen % 36) * (15 * 6.5) %>px">
+  <div class="ruler"><%= ruler(@query.nalen) %></div>
   <div class="translation"><%= @protein.gsub(/(.)/, ' \1 ') %></div>
   <div class="query"><%= @query.naseq.upcase %></div>
   <% @hits.each_with_index do |hit, index| %>

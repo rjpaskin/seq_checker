@@ -13,4 +13,14 @@ module SeqUtils
     end
     return '<span>' + target.join + '</span>'
   end
+  
+  def ruler(max_num)
+    max = (max_num / 10).floor
+    
+    1.upto(max).each_with_object(output = '') do |num|
+      output << "#{num.to_s.rjust(9)}<u>0</u>".gsub(' ', '&nbsp;')
+    end
+    
+    output
+  end
 end

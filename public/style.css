@@ -8,7 +8,7 @@
   color: #666;
   position: relative;
   min-height: 1000px;
-  overflow: overlay;
+  overflow: none;
   padding-right: 30px;
   background-image: -webkit-gradient(linear, 0 0, 100% 0, color-stop(.5, white), color-stop(.5, #F9F9F9), to(#F9F9F9));
   -webkit-background-size: 60px;
@@ -19,13 +19,18 @@
   width: inherit;
 }
 
-.alignment .translation {
+.alignment .ruler {
   top: 0px;
   color: lightgrey;
 }
 
-.alignment .query {
+.alignment .translation {
   top: 15px;
+  color: darkgrey;
+}
+
+.alignment .query {
+  top: 30px;
 }
 
 .alignment .target {
@@ -66,7 +71,7 @@
 }
 
 .alignment .target-1 {
-  top: 30px;
+  top: 45px;
   color: blue;
 }
 
@@ -79,7 +84,7 @@
 }
 
 .alignment .target-2 {
-  top: 65px;
+  top: 80px;
   color: forestgreen;
 }
 
