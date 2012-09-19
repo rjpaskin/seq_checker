@@ -9,7 +9,7 @@ module SeqUtils
     target = target.split(//)
     
     query.each_with_index do |na, pos|
-      target[pos] = '</span><span class="insertion"><i class="arrow"></i><span>' + target[pos] + '</span></span><span>' if na == '-'
+      target[pos] = insertion_template(target[pos]) if na == '-'
     end
     return '<span>' + target.join + '</span>'
   end
@@ -23,4 +23,10 @@ module SeqUtils
     
     output
   end
+  
+  private
+  
+    def insertion_template(text)
+      %Q{</span><span class="insertion"><i class="arrow"></i><span>#{text}</span></span><span>}
+    end
 end
